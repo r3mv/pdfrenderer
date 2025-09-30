@@ -13,12 +13,11 @@ app.use(bodyParser.json({limit: '10mb'})); // support HTML volumineux
 async function launchBrowser() {
     const revision = '140.0.7339.207'; // révision stable
     const installOptions = {browser: "chrome", buildId: revision}
-    const browserFetcher = browsers.install(installOptions);
-
-    const revisionInfo = await browserFetcher.download(revision); // télécharge Chromium si pas présent
-
+    await browsers.install(installOptions);
+    const executablePath = browsers.computeExecutablePath(installOptions);
+    console.log('[PDF SERVICE] Browser installe')
     return await puppeteer.launch({
-        executablePath: revisionInfo.executablePath,
+        executablePath,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 }
