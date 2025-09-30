@@ -18,7 +18,9 @@ app.post('/generate-pdf', async (req, res) => {
     if (!html) return res.status(400).send({error: "Missing HTML"});
 
     try {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
         const page = await browser.newPage();
         await page.setContent(html, {waitUntil: 'networkidle0'});
         const pdfBuffer = await page.pdf({format: 'A4'});
