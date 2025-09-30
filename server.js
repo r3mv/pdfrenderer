@@ -13,8 +13,8 @@ app.use(bodyParser.json({limit: '10mb'})); // support HTML volumineux
 async function launchBrowser() {
     const revision = '140.0.7339.207'; // révision stable
     const installOptions = {browser: "chrome", buildId: revision}
-    await browsers.install(installOptions);
-    const executablePath = browsers.computeExecutablePath(installOptions);
+    await installBinaries([installOptions]);
+    const executablePath = computeExecutablePath(installOptions);
     console.log('[PDF SERVICE] Browser installe')
     return await puppeteer.launch({
         executablePath,
