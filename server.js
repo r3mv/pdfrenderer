@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const puppeteer = require('puppeteer-core');
+const {browsers} = require('@puppeteer/browsers');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,8 +11,10 @@ const SECRET = process.env.BEARER_TOKEN
 app.use(bodyParser.json({limit: '10mb'})); // support HTML volumineux
 
 async function launchBrowser() {
-    const browserFetcher = puppeteer.createBrowserFetcher();
     const revision = '140.0.7339.207'; // révision stable
+    const installOptions = {browser: "chrome", buildId: revision}
+    const browserFetcher = browsers.install(installOptions);
+
     const revisionInfo = await browserFetcher.download(revision); // télécharge Chromium si pas présent
 
     return await puppeteer.launch({
