@@ -52,4 +52,5 @@ app.post('/generate-pdf', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`PDF service running on http://localhost:${PORT}`));
+app.listen(PORT, "localhost",
+    () => console.log(`PDF service running on http://localhost:${PORT}`));
