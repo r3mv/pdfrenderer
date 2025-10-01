@@ -1,23 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const puppeteer = require('puppeteer-core');
-const {browsers} = require('@puppeteer/browsers');
-
+const puppeteer = require('puppeteer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SECRET = process.env.BEARER_TOKEN
+const SECRET = process.env.BEARER_TOKEN || 'devToken'
 
-app.use(bodyParser.json({limit: '10mb'})); // support HTML volumineux
+app.use(bodyParser.json({limit: '10mb'}));
 
 async function launchBrowser() {
-    const revision = '140.0.7339.207'; // révision stable
-    const installOptions = {browser: "chrome", buildId: revision}
-    await installBinaries([installOptions]);
-    const executablePath = computeExecutablePath(installOptions);
-    console.log('[PDF SERVICE] Browser installe')
+    // const revision = '140.0.7339.207'; // révision stable
+    // const installOptions = {browser: "chrome@stable"}
+    // console.log(browsers);
+    // chrome = await browsers.install([installOptions]);
+    // console.log(chrome);
+    // const executablePath = computeExecutablePath(installOptions);
+    // console.log('[PDF SERVICE] Browser installe')
+    // return await puppeteer.launch({
+    //     executablePath,
+    //     args: ['--no-sandbox', '--disable-setuid-sandbox']
+    // });
     return await puppeteer.launch({
-        executablePath,
+        headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 }
