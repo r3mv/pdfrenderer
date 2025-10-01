@@ -24,3 +24,7 @@ node -v # Should print "v22.20.0".
 npm -v # Should print "10.9.3".
 ```
 
+On doit installer toutes les libs dynamiques manquantes pour faire tourner chrome (cf `ldd .cache/puppeteer/chrome/linux-140.0.7339.207/chrome-linux64/chrome`)
+
+
+
